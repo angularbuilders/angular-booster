@@ -32,17 +32,17 @@ import { QueryParams } from './query-params';
       <header>
         <h2>Found {{ launches.length }} launches</h2>
       </header>
-      <aside>
+      <aside *ngFor="let launch of launches">
         <h3>
-          {{ launches[0].name }}
+          {{ launch.name }}
         </h3>
         <p>
-          <b>on {{ launches[0].net | date: 'dd/MM/yyyy HH:mm:ss' }}</b>
+          <b>on {{ launch.net | date: 'dd/MM/yyyy HH:mm:ss' }}</b>
         </p>
         <p>
-          <i> at {{ launches[0].location }}</i>
+          <i> at {{ launch.location }}</i>
         </p>
-        <i> pad: {{ launches[0].pad }}</i>
+        <i> pad: {{ launch.pad }}</i>
       </aside>
     </section>
   `,
