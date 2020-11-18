@@ -28,7 +28,7 @@ import { QueryParams } from './query-params';
         <button type="submit" (click)="getSpaceData()">Go !</button>
       </form>
     </section>
-    <section>
+    <section *ngIf="launches.length > 0">
       <header>
         <h2>Found {{ launches.length }} launches</h2>
       </header>
@@ -45,6 +45,11 @@ import { QueryParams } from './query-params';
         <i> pad: {{ launch.pad }}</i>
       </aside>
     </section>
+    <aside *ngIf="launches.length == 0">
+      <header>
+        <h4>📡 Waiting... No data yet 📡</h4>
+      </header>
+    </aside>
   `,
   styles: [
     `
