@@ -32,7 +32,7 @@ import { QueryParams } from './query-params';
       <header>
         <h2>Found {{ launches.length }} launches</h2>
       </header>
-      <aside *ngFor="let launch of launches">
+      <aside *ngFor="let launch of launches" class="{{ launch.status.name | lowercase }}">
         <h3>
           {{ launch.name }}
         </h3>
@@ -51,6 +51,12 @@ import { QueryParams } from './query-params';
       h1 {
         color: #28aaff;
       }
+      .success {
+        color: #3ad29f;
+      }
+      .failure {
+        color: #f73454;
+      }
     `,
   ],
 })
@@ -62,9 +68,7 @@ export class AppComponent {
   };
   launches: Launch[] = [];
 
-  constructor(private http: HttpClient) {
-    this.getSpaceData();
-  }
+  constructor(private http: HttpClient) {}
 
   getSpaceData() {
     const rootUrl = 'https://lldev.thespacedevs.com/2.0.0/launch/?mode=list&';
