@@ -105,5 +105,8 @@
       }
     }
   },
-  "defaultProject": "angular-booster"
+  "defaultProject": "angular-booster",
+  "cli": {
+    "analytics": false
+  }
 }
