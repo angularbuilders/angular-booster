@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Launch } from './launch';
 import { QueryParams } from './query-params';
 
 @Component({
@@ -25,6 +26,23 @@ import { QueryParams } from './query-params';
         <button type="submit" class="">Go !</button>
       </form>
     </section>
+    <section>
+      <header>
+        <h2>Found {{ launches.length }} launches</h2>
+      </header>
+      <aside>
+        <h3>
+          {{ launches[0].name }}
+        </h3>
+        <p>
+          <b>on {{ launches[0].net | date: 'dd/MM/yyyy HH:mm:ss' }}</b>
+        </p>
+        <p>
+          <i> at {{ launches[0].location }}</i>
+        </p>
+        <i> pad: {{ launches[0].pad }}</i>
+      </aside>
+    </section>
   `,
   styles: [
     `
@@ -40,4 +58,13 @@ export class AppComponent {
     numberOfLaunches: 100,
     searchTerm: 'Shuttle',
   };
+  launches: Launch[] = [
+    {
+      name: 'Space Shuttle Columbia / OV-102 | STS-1',
+      net: new Date('1981-04-12T12:00:04Z'),
+      status: { name: 'Success' },
+      location: 'Kennedy Space Center, FL, USA',
+      pad: 'Launch Complex 39A',
+    },
+  ];
 }
