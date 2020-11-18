@@ -50,6 +50,12 @@ import { QueryParams } from './query-params';
         <h4>📡 Waiting... No data yet 📡</h4>
       </header>
     </aside>
+    <aside *ngIf="theProblem !== ''">
+      <header>
+        <h3>💫 Houston, we have a problem! 💫</h3>
+        <h5>{{ theProblem | json }}</h5>
+      </header>
+    </aside>
   `,
   styles: [
     `
@@ -72,14 +78,16 @@ export class AppComponent {
     searchTerm: 'Shuttle',
   };
   launches: Launch[] = [];
+  theProblem = '';
 
   constructor(private http: HttpClient) {}
 
   getSpaceData() {
-    const rootUrl = 'https://lldev.thespacedevs.com/2.0.0/launch/?mode=list&';
+    const rootUrl = 'https://ll.thespacedevs.com/2.0.0/launch/?mode=list&';
     const launchesUrl = `${rootUrl}limit=${this.queryParams.numberOfLaunches}&search=${this.queryParams.searchTerm}`;
     this.http.get<ApiResult>(launchesUrl).subscribe({
       next: data => (this.launches = data.results),
+      error: err => (this.theProblem = err.error.detail),
     });
   }
 }
