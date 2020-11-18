@@ -19,13 +19,13 @@ import { QueryParams } from './query-params';
         </legend>
         <div>
           <label for="searchTerm">Search term</label>
-          <input name="searchTerm" type="text" value="{{ queryParams.searchTerm }}" />
+          <input name="searchTerm" type="text" [(ngModel)]="queryParams.searchTerm" />
         </div>
         <div>
           <label for="numberOfLaunches">Number of launches</label>
-          <input name="numberOfLaunches" type="number" value="{{ queryParams.numberOfLaunches }}" />
+          <input name="numberOfLaunches" type="number" [(ngModel)]="queryParams.numberOfLaunches" />
         </div>
-        <button type="submit" class="">Go !</button>
+        <button type="submit" (click)="getSpaceData()">Go !</button>
       </form>
     </section>
     <section>
@@ -62,10 +62,14 @@ export class AppComponent {
   };
   launches: Launch[] = [];
 
-  constructor(http: HttpClient) {
+  constructor(private http: HttpClient) {
+    this.getSpaceData();
+  }
+
+  getSpaceData() {
     const rootUrl = 'https://lldev.thespacedevs.com/2.0.0/launch/?mode=list&';
     const launchesUrl = `${rootUrl}limit=${this.queryParams.numberOfLaunches}&search=${this.queryParams.searchTerm}`;
-    http.get<ApiResult>(launchesUrl).subscribe({
+    this.http.get<ApiResult>(launchesUrl).subscribe({
       next: data => (this.launches = data.results),
     });
   }
