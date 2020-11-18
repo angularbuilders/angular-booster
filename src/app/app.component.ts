@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { ApiResult } from './api-result';
 import { Launch } from './launch';
 import { QueryParams } from './query-params';
 
@@ -58,13 +60,13 @@ export class AppComponent {
     numberOfLaunches: 100,
     searchTerm: 'Shuttle',
   };
-  launches: Launch[] = [
-    {
-      name: 'Space Shuttle Columbia / OV-102 | STS-1',
-      net: new Date('1981-04-12T12:00:04Z'),
-      status: { name: 'Success' },
-      location: 'Kennedy Space Center, FL, USA',
-      pad: 'Launch Complex 39A',
-    },
-  ];
+  launches: Launch[] = [];
+
+  constructor(http: HttpClient) {
+    const rootUrl = 'https://lldev.thespacedevs.com/2.0.0/launch/?mode=list&';
+    const launchesUrl = `${rootUrl}limit=${this.queryParams.numberOfLaunches}&search=${this.queryParams.searchTerm}`;
+    http.get<ApiResult>(launchesUrl).subscribe({
+      next: data => (this.launches = data.results),
+    });
+  }
 }
