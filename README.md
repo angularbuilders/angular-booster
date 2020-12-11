@@ -1,5 +1,9 @@
 # AngularBooster
 
+## Rocket launches consulting web. 
+### Example of an Angular application used for training.
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.1.
 
 ## Development server
