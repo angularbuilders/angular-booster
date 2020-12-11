@@ -8,7 +8,8 @@
     "serve": "lite-server --baseDir=dist/angular-booster",
     "deploy-gh": "ng build --prod --deleteOutputPath=true --outputPath=docs --baseHref=https://angularbuilders.github.io/angular-booster/",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "update": "ng update"
   },
   "private": true,
   "dependencies": {
