@@ -9,7 +9,8 @@
     "deploy-gh": "ng build --prod --deleteOutputPath=true --outputPath=docs --baseHref=https://angularbuilders.github.io/angular-booster/",
     "test": "ng test",
     "lint": "ng lint",
-    "update": "ng update"
+    "update": "ng update",
+    "deploy": "ng deploy --base-href=/angular-booster/"
   },
   "private": true,
   "dependencies": {
