@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  rootUrl: 'https://lldev.thespacedevs.com/2.0.0/launch/?mode=list&',
+  rootUrl: 'https://lldev.thespacedevs.com/2.0.0/',
 };
 
 /*

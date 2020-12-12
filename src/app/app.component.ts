@@ -19,12 +19,6 @@ import { Component } from '@angular/core';
       h1 {
         color: #28aaff;
       }
-      .success {
-        color: #3ad29f;
-      }
-      .failure {
-        color: #f73454;
-      }
     `,
   ],
 })

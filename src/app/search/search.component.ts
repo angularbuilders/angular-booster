@@ -29,30 +29,10 @@ import { QueryParams } from '../query-params';
       <header>
         <h2>Found {{ launches.length }} launches</h2>
       </header>
-      <aside *ngFor="let launch of launches" class="{{ launch.status.name | lowercase }}">
-        <h3>
-          {{ launch.name }}
-        </h3>
-        <p>
-          <b>on {{ launch.net | date: 'dd/MM/yyyy HH:mm:ss' }}</b>
-        </p>
-        <p>
-          <i> at {{ launch.location }}</i>
-        </p>
-        <i> pad: {{ launch.pad }}</i>
-      </aside>
+      <ab-launch-card *ngFor="let launch of launches" [launch]="launch"> </ab-launch-card>
     </section>
-    <aside *ngIf="launches.length == 0">
-      <header>
-        <h4>📡 Waiting... No data yet 📡</h4>
-      </header>
-    </aside>
-    <aside *ngIf="theProblem !== ''">
-      <header>
-        <h3>💫 Houston, we have a problem! 💫</h3>
-        <h5>{{ theProblem | json }}</h5>
-      </header>
-    </aside>
+    <ab-waiting-card [launches]="launches"> </ab-waiting-card>
+    <ab-problem-card [theProblem]="theProblem"> </ab-problem-card>
   `,
   styles: [],
 })
@@ -67,7 +47,7 @@ export class SearchComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   getSpaceData(): void {
-    const launchesUrl = `${environment.rootUrl}limit=${this.queryParams.numberOfLaunches}&search=${this.queryParams.searchTerm}`;
+    const launchesUrl = `${environment.rootUrl}launch/?limit=${this.queryParams.numberOfLaunches}&search=${this.queryParams.searchTerm}&mode=list`;
     this.http.get<ApiResult>(launchesUrl).subscribe({
       next: data => (this.launches = data.results),
       error: err => (this.theProblem = err.error.detail),
