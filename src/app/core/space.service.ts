@@ -25,4 +25,9 @@ export class SpaceService {
     const url = `${this.launchesUrl}?limit=${queryParams.limit}&search=${queryParams.searchTerm}&${this.modeList}`;
     return this.http.get<ApiResult>(url).pipe(map(data => data.results));
   }
+
+  getLaunch$(id: string): Observable<Launch> {
+    const url = `${this.launchesUrl}${id}`;
+    return this.http.get<Launch>(url);
+  }
 }
