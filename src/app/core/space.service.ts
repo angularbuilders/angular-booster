@@ -30,4 +30,8 @@ export class SpaceService {
     const url = `${this.launchesUrl}${id}`;
     return this.http.get<Launch>(url);
   }
+  getLaunchByslug$(slug: string): Observable<Launch> {
+    const url = `${this.launchesUrl}?slug=${slug}`;
+    return this.http.get<ApiResult>(url).pipe(map(data => data.results[0]));
+  }
 }

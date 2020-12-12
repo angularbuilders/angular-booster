@@ -18,7 +18,7 @@ export class LaunchComponent implements OnInit {
 
   ngOnInit(): void {
     this.launchId = this.route.snapshot.params.id;
-    this.srv.getLaunch$(this.launchId).subscribe({
+    this.srv.getLaunchByslug$(this.launchId).subscribe({
       next: data => (this.launch = data),
       error: err => (this.theProblem = err.error.detail),
     });

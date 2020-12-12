@@ -12,6 +12,7 @@ type Descriptor = {
 
 export interface Launch {
   id: string;
+  slug: string;
   name: string;
   net: Date;
   status: { name: string };
