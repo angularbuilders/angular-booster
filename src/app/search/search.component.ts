@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { ApiResult } from '../api-result';
+import { SpaceService } from '../core/space.service';
 import { Launch } from '../launch';
 import { QueryParams } from '../query-params';
 
@@ -11,7 +9,7 @@ import { QueryParams } from '../query-params';
     <section>
       <form>
         <legend>
-          Searching {{ queryParams.numberOfLaunches }} launches related to
+          Searching {{ queryParams.limit }} launches related to
           {{ queryParams.searchTerm }}
         </legend>
         <div>
@@ -20,7 +18,7 @@ import { QueryParams } from '../query-params';
         </div>
         <div>
           <label for="numberOfLaunches">Number of launches</label>
-          <input name="numberOfLaunches" type="number" [(ngModel)]="queryParams.numberOfLaunches" />
+          <input name="numberOfLaunches" type="number" [(ngModel)]="queryParams.limit" />
         </div>
         <button type="submit" (click)="getSpaceData()">Go !</button>
       </form>
@@ -38,18 +36,17 @@ import { QueryParams } from '../query-params';
 })
 export class SearchComponent implements OnInit {
   queryParams: QueryParams = {
-    numberOfLaunches: 100,
+    limit: 100,
     searchTerm: 'Shuttle',
   };
   launches: Launch[] = [];
   theProblem = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private srv: SpaceService) {}
 
   getSpaceData(): void {
-    const launchesUrl = `${environment.rootUrl}launch/?limit=${this.queryParams.numberOfLaunches}&search=${this.queryParams.searchTerm}&mode=list`;
-    this.http.get<ApiResult>(launchesUrl).subscribe({
-      next: data => (this.launches = data.results),
+    this.srv.getSearchedLaunches$(this.queryParams).subscribe({
+      next: data => (this.launches = data),
       error: err => (this.theProblem = err.error.detail),
     });
   }

@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
-import { ApiResult } from '../api-result';
+import { SpaceService } from '../core/space.service';
 import { Launch } from '../launch';
 
 @Component({
@@ -22,12 +20,11 @@ export class HomeComponent implements OnInit {
   launches: Launch[] = [];
   theProblem = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private srv: SpaceService) {}
 
   getSpaceData(): void {
-    const launchesUrl = `${environment.rootUrl}launch/upcoming/?mode=list`;
-    this.http.get<ApiResult>(launchesUrl).subscribe({
-      next: data => (this.launches = data.results),
+    this.srv.getUpcomingLaunches$().subscribe({
+      next: data => (this.launches = data),
       error: err => (this.theProblem = err.error.detail),
     });
   }
