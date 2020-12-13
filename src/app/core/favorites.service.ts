@@ -8,13 +8,9 @@ export class FavoritesService {
   constructor() {}
 
   add(slug: string) {
-    let favoriteLaunchesStored = localStorage.getItem(this.favoritesKey);
-    let favoriteLaunches: string[] = [];
-    if (favoriteLaunchesStored != undefined) {
-      favoriteLaunches = JSON.parse(favoriteLaunchesStored);
-    }
+    let favoriteLaunches: string[] = this.getList();
     favoriteLaunches.push(slug);
-    favoriteLaunchesStored = JSON.stringify(favoriteLaunches);
+    const favoriteLaunchesStored = JSON.stringify(favoriteLaunches);
     localStorage.setItem(this.favoritesKey, favoriteLaunchesStored);
   }
   getList() {
