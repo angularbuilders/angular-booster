@@ -4,7 +4,7 @@ import { Launch } from 'src/app/launch';
 @Component({
   selector: 'ab-launch-card',
   template: `
-    <aside>
+    <aside *ngIf="launch">
       <h3>
         <a [routerLink]="['/launch/' + launch.slug]"> {{ launch.name }}</a>
       </h3>

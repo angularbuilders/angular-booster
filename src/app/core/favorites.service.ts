@@ -17,7 +17,7 @@ export class FavoritesService {
     favoriteLaunchesStored = JSON.stringify(favoriteLaunches);
     localStorage.setItem(this.favoritesKey, favoriteLaunchesStored);
   }
-  list() {
+  getList() {
     const favoriteLaunchesStored = localStorage.getItem(this.favoritesKey);
     const favoriteLaunches: string[] = JSON.parse(favoriteLaunchesStored);
     return favoriteLaunches;

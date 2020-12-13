@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
             <a [routerLink]="['/search']">Search</a>
           </li>
           <li>
-            <a [routerLink]="['/search']">Favorites</a>
+            <a [routerLink]="['/favorites']">Favorites</a>
           </li>
         </ul>
       </nav>
