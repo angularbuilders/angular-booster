@@ -19,7 +19,10 @@ export class FavoritesService {
   }
   getList() {
     const favoriteLaunchesStored = localStorage.getItem(this.favoritesKey);
-    const favoriteLaunches: string[] = JSON.parse(favoriteLaunchesStored);
+    let favoriteLaunches: string[] = [];
+    if (favoriteLaunchesStored != undefined) {
+      favoriteLaunches = JSON.parse(favoriteLaunchesStored);
+    }
     return favoriteLaunches;
   }
 }
