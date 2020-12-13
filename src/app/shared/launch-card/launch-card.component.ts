@@ -14,7 +14,9 @@ import { Launch } from 'src/app/launch';
       <ab-location [launch]="launch"></ab-location>
       <ab-mission [launch]="launch"></ab-mission>
       <ab-service-provider [launch]="launch"></ab-service-provider>
-      <button (click)="onClicAddToFavorites()">Add to favorites 🤍</button>
+      <button *ngIf="allowAddToFavorites" (click)="onClicAddToFavorites()">
+        Add to favorites 🤍
+      </button>
     </aside>
   `,
   styles: [
@@ -33,6 +35,7 @@ import { Launch } from 'src/app/launch';
 })
 export class LaunchCardComponent implements OnInit {
   @Input() launch: Launch;
+  @Input() allowAddToFavorites = false;
   @Output() addToFavorites = new EventEmitter<string>();
   constructor() {}
 

@@ -6,7 +6,12 @@ import { Launch } from '../launch';
 @Component({
   selector: 'ab-launch',
   template: `<section>
-    <ab-launch-card [launch]="launch"> </ab-launch-card>
+    <ab-launch-card
+      [launch]="launch"
+      allowAddToFavorites="true"
+      (addToFavorites)="onAddToFavorites()"
+    >
+    </ab-launch-card>
   </section>`,
   styles: [],
 })
@@ -23,4 +28,6 @@ export class LaunchComponent implements OnInit {
       error: err => (this.theProblem = err.error.detail),
     });
   }
+
+  onAddToFavorites() {}
 }
