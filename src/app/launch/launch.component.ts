@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FavoritesService } from '../core/favorites.service';
 import { SpaceService } from '../core/space.service';
 import { Launch } from '../launch';
 
@@ -9,7 +10,7 @@ import { Launch } from '../launch';
     <ab-launch-card
       [launch]="launch"
       allowAddToFavorites="true"
-      (addToFavorites)="onAddToFavorites()"
+      (addToFavorites)="onAddToFavorites($event)"
     >
     </ab-launch-card>
   </section>`,
@@ -19,7 +20,11 @@ export class LaunchComponent implements OnInit {
   launchId: string;
   launch: Launch;
   theProblem = '';
-  constructor(private route: ActivatedRoute, private srv: SpaceService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private srv: SpaceService,
+    private fav: FavoritesService
+  ) {}
 
   ngOnInit(): void {
     this.launchId = this.route.snapshot.params.id;
@@ -29,5 +34,7 @@ export class LaunchComponent implements OnInit {
     });
   }
 
-  onAddToFavorites() {}
+  onAddToFavorites(slug: string) {
+    this.fav.add(slug);
+  }
 }
