@@ -4,15 +4,24 @@ import { Component } from '@angular/core';
   selector: 'ab-root',
   template: `
     <header>
-      <h1>
-        <a [routerLink]="['/']">{{ title }}</a>
-      </h1>
-      <p>Angular application example for lift off 🚀</p>
       <nav>
-        <a [routerLink]="['/search']">Search</a>
+        <h1>
+          <a [routerLink]="['/']">{{ title }}</a>
+        </h1>
+        <ul>
+          <li>
+            <a [routerLink]="['/search']">Search</a>
+          </li>
+          <li>
+            <a [routerLink]="['/search']">Favorites</a>
+          </li>
+        </ul>
       </nav>
+      <h1><a [routerLink]="['/']">Angular application example for lift off 🚀</a></h1>
     </header>
-    <router-outlet> </router-outlet>
+    <main>
+      <router-outlet> </router-outlet>
+    </main>
   `,
   styles: [
     `
