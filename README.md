@@ -1,6 +1,6 @@
 # AngularBooster
 
-## Rocket launches consulting web. 
+## Rocket launches consulting web.
 ### Example of an Angular application used for training.
 
 
@@ -29,3 +29,15 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+# Server side Rendering
+
+## Development
+
+Run `yarn dev:ssr` for a dev server. Navigate to `http://localhost:4201/`. The app will automatically reload if you change any of the source files. The server will emit any request prerendered.
+
+## Production
+
+First run `yarn build:ssr` for compile the client application and generate an Express server.
+
+Then run `yarn serve:ssr` to execute the Node application and head to `http://localhost:4000` . Every new request (first or reload) will be served prerendered. Any local navigation will be resolved by angular at the browser as usual.
