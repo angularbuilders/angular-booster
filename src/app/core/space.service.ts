@@ -19,17 +19,17 @@ export class SpaceService {
 
   getUpcomingLaunches$(limit = 10): Observable<Launch[]> {
     const url = `${this.launchesUrl}upcoming/?limit=${limit}&${this.modeList}`;
-    return this.transferState(url, data => data.results);
-  }
-
-  getLaunchBySlug$(slug: string): Observable<Launch> {
-    const url = `${this.launchesUrl}?slug=${slug}`;
-    return this.transferState(url, data => data.results[0]);
+    return this.http.get<ApiResult>(url).pipe(map(data => data.results));
   }
 
   getSearchedLaunches$(queryParams: QueryParams): Observable<Launch[]> {
     const url = `${this.launchesUrl}?limit=${queryParams.limit}&search=${queryParams.searchTerm}&${this.modeList}`;
     return this.http.get<ApiResult>(url).pipe(map(data => data.results));
+  }
+
+  getLaunchBySlug$(slug: string): Observable<Launch> {
+    const url = `${this.launchesUrl}?slug=${slug}`;
+    return this.transferState(url, data => data.results[0]);
   }
 
   private transferState(url: string, mapper: Function): Observable<any> {
