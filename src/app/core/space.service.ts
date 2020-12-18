@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ApiResult } from '../api-result';
 import { Launch } from '../launch';
 import { QueryParams } from '../query-params';
+import { UniversalService } from './universal.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +15,20 @@ export class SpaceService {
   private launchesUrl = `${environment.rootUrl}launch/`;
   private modeList = 'mode=list';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private universal: UniversalService) {}
 
   getUpcomingLaunches$(limit = 10): Observable<Launch[]> {
     const url = `${this.launchesUrl}upcoming/?limit=${limit}&${this.modeList}`;
-    return this.http.get<ApiResult>(url).pipe(map(data => data.results));
+    const transferedResult = this.universal.getTransferedObject(url);
+    if (transferedResult) {
+      return of(transferedResult);
+    } else {
+      return this.http.get<ApiResult>(url).pipe(
+        map(data => data.results),
+        tap(data => this.universal.setObjectToTransfer(url, data))
+      );
+    }
+    // return this.http.get<ApiResult>(url).pipe(map(data => data.results));
   }
 
   getSearchedLaunches$(queryParams: QueryParams): Observable<Launch[]> {
@@ -28,10 +38,25 @@ export class SpaceService {
 
   getLaunch$(id: string): Observable<Launch> {
     const url = `${this.launchesUrl}${id}`;
-    return this.http.get<Launch>(url);
+    const transferedResult = this.universal.getTransferedObject(url);
+    if (transferedResult) {
+      return of(transferedResult);
+    } else {
+      return this.http
+        .get<Launch>(url)
+        .pipe(tap(data => this.universal.setObjectToTransfer(url, data)));
+    }
   }
   getLaunchBySlug$(slug: string): Observable<Launch> {
     const url = `${this.launchesUrl}?slug=${slug}`;
-    return this.http.get<ApiResult>(url).pipe(map(data => data.results[0]));
+    const transferedResult = this.universal.getTransferedObject(url);
+    if (transferedResult) {
+      return of(transferedResult);
+    } else {
+      return this.http.get<ApiResult>(url).pipe(
+        map(data => data.results[0]),
+        tap(data => this.universal.setObjectToTransfer(url, data))
+      );
+    }
   }
 }
