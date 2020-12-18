@@ -1,19 +1,18 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class I18nService {
-  private userLang: string;
-
-  constructor() {
-    this.userLang = window.navigator.language;
-  }
+  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
 
   public getDateFormat(): string {
-    if (this.userLang.indexOf('-US') >= 0) {
-      return 'MM/dd/yyyy hh:mm a';
-    } else {
+    if (isPlatformBrowser(this.platformId)) {
+      const userLang = window.navigator.language;
+      if (userLang.indexOf('-US') >= 0) {
+        return 'MM/dd/yyyy hh:mm a';
+      }
       return 'dd/MM/yyyy HH:mm';
     }
   }
