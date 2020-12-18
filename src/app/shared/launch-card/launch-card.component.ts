@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { I18nService } from 'src/app/core/i18n.service';
 import { Launch } from 'src/app/launch';
 
 @Component({
@@ -9,7 +10,7 @@ import { Launch } from 'src/app/launch';
         <a [routerLink]="['/launch/' + launch.slug]"> {{ launch.name }}</a>
       </h3>
       <p class="{{ launch.status.name | lowercase }}">
-        <b>on {{ launch.net | date: 'dd/MM/yyyy HH:mm:ss' }}</b>
+        <b>on {{ launch.net | date: dateFormat }}</b>
       </p>
       <ab-location [launch]="launch"></ab-location>
       <ab-mission [launch]="launch"></ab-mission>
@@ -37,7 +38,12 @@ export class LaunchCardComponent implements OnInit {
   @Input() launch: Launch;
   @Input() allowAddToFavorites = false;
   @Output() addToFavorites = new EventEmitter<string>();
-  constructor() {}
+
+  dateFormat: string;
+
+  constructor(i18n: I18nService) {
+    this.dateFormat = i18n.getDateFormat();
+  }
 
   ngOnInit(): void {}
   onClicAddToFavorites() {
