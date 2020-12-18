@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --hmr -o",
-    "build": "ng build --prod",
+    "start": "npm run serve:ssr",
+    "build": "npm run build:ssr",
     "preserve": "npm run build",
     "serve": "lite-server --baseDir=dist/angular-booster",
     "test": "ng test",
