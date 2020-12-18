@@ -14,23 +14,22 @@ export class UniversalService {
     return isPlatformServer(this.platformId);
   }
 
-  getTransferedObject(key: string) {
-    let dataCached = null;
+  getTransferedData(key: string) {
     if (this.isPlatformServer()) {
-      return dataCached;
+      return null;
     }
     const stateKey = makeStateKey<Object>(key);
     if (this.ts.hasKey(stateKey)) {
-      dataCached = this.ts.get<Object>(stateKey, null);
-      console.log('got cache for ' + key);
-      console.log({ dataCached });
+      const cachedObject = this.ts.get<Object>(stateKey, null);
+      console.log('✅ Got cache for ' + key);
       this.ts.remove(stateKey);
+      return cachedObject;
     } else {
-      console.log('No cache for ' + key);
+      console.log('🚫 No cache for ' + key);
+      return null;
     }
-    return dataCached;
   }
-  setObjectToTransfer(key: string, data: Object) {
+  setDataToTransfer(key: string, data: Object) {
     if (this.isPlatformBrowser()) {
       return;
     }

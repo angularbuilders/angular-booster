@@ -19,16 +19,12 @@ export class SpaceService {
 
   getUpcomingLaunches$(limit = 10): Observable<Launch[]> {
     const url = `${this.launchesUrl}upcoming/?limit=${limit}&${this.modeList}`;
-    const transferedResult = this.universal.getTransferedObject(url);
-    if (transferedResult) {
-      return of(transferedResult);
-    } else {
-      return this.http.get<ApiResult>(url).pipe(
-        map(data => data.results),
-        tap(data => this.universal.setObjectToTransfer(url, data))
-      );
-    }
-    // return this.http.get<ApiResult>(url).pipe(map(data => data.results));
+    return this.transferState(url, data => data.results);
+  }
+
+  getLaunchBySlug$(slug: string): Observable<Launch> {
+    const url = `${this.launchesUrl}?slug=${slug}`;
+    return this.transferState(url, data => data.results[0]);
   }
 
   getSearchedLaunches$(queryParams: QueryParams): Observable<Launch[]> {
@@ -36,27 +32,14 @@ export class SpaceService {
     return this.http.get<ApiResult>(url).pipe(map(data => data.results));
   }
 
-  getLaunch$(id: string): Observable<Launch> {
-    const url = `${this.launchesUrl}${id}`;
-    const transferedResult = this.universal.getTransferedObject(url);
+  private transferState(url: string, mapper: Function): Observable<any> {
+    const transferedResult = this.universal.getTransferedData(url);
     if (transferedResult) {
       return of(transferedResult);
-    } else {
-      return this.http
-        .get<Launch>(url)
-        .pipe(tap(data => this.universal.setObjectToTransfer(url, data)));
     }
-  }
-  getLaunchBySlug$(slug: string): Observable<Launch> {
-    const url = `${this.launchesUrl}?slug=${slug}`;
-    const transferedResult = this.universal.getTransferedObject(url);
-    if (transferedResult) {
-      return of(transferedResult);
-    } else {
-      return this.http.get<ApiResult>(url).pipe(
-        map(data => data.results[0]),
-        tap(data => this.universal.setObjectToTransfer(url, data))
-      );
-    }
+    return this.http.get<ApiResult>(url).pipe(
+      map(data => mapper(data)),
+      tap(data => this.universal.setDataToTransfer(url, data))
+    );
   }
 }
