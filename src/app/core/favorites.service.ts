@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Favorites } from './favorites.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class FavoritesService {
+@Injectable()
+export class FavoritesService implements Favorites {
   private favoritesKey = 'favoriteLaunches';
   constructor() {}
 
@@ -13,7 +12,7 @@ export class FavoritesService {
     const favoriteLaunchesStored = JSON.stringify(favoriteLaunches);
     localStorage.setItem(this.favoritesKey, favoriteLaunchesStored);
   }
-  getList() {
+  getList(): string[] {
     const favoriteLaunchesStored = localStorage.getItem(this.favoritesKey);
     let favoriteLaunches: string[] = [];
     if (favoriteLaunchesStored != undefined) {
