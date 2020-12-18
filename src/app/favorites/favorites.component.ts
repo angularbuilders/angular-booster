@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FavoritesService } from '../core/favorites.service';
+import { SeoService } from '../core/seo.service';
 import { SpaceService } from '../core/space.service';
 import { Launch } from '../launch';
 
@@ -21,11 +22,12 @@ export class FavoritesComponent implements OnInit {
   launches: Launch[] = [];
   theProblem = '';
 
-  constructor(private fav: FavoritesService, private srv: SpaceService) {}
+  constructor(private fav: FavoritesService, private srv: SpaceService, private seo: SeoService) {}
 
   ngOnInit(): void {
     const favSlugs = this.fav.getList();
     favSlugs.forEach(slug => this.getLauch(slug));
+    this.seo.setTitle('Favorites');
   }
 
   private getLauch(slug: string) {

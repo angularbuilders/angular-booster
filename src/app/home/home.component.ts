@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SeoService } from '../core/seo.service';
 import { SpaceService } from '../core/space.service';
 import { Launch } from '../launch';
 
@@ -20,7 +21,7 @@ export class HomeComponent implements OnInit {
   launches: Launch[] = [];
   theProblem = '';
 
-  constructor(private srv: SpaceService) {}
+  constructor(private srv: SpaceService, private seo: SeoService) {}
 
   getSpaceData(): void {
     this.srv.getUpcomingLaunches$().subscribe({
@@ -31,5 +32,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSpaceData();
+    this.seo.setTitle('next 10 launches');
+    this.seo.setDescription('Next 10 Rocket launch scheduled.');
+    this.seo.setKeywords(['rockets', 'launch', 'nasa', 'spacex']);
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SeoService } from '../core/seo.service';
 import { SpaceService } from '../core/space.service';
 import { Launch } from '../launch';
 import { QueryParams } from '../query-params';
@@ -42,7 +43,7 @@ export class SearchComponent implements OnInit {
   launches: Launch[] = [];
   theProblem = '';
 
-  constructor(private srv: SpaceService) {}
+  constructor(private srv: SpaceService, private seo: SeoService) {}
 
   getSpaceData(): void {
     this.srv.getSearchedLaunches$(this.queryParams).subscribe({
@@ -53,5 +54,8 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSpaceData();
+    this.seo.setTitle('Search');
+    this.seo.setDescription('Search the rocket launches library.');
+    this.seo.setKeywords(['rocket', 'launch', 'search']);
   }
 }
