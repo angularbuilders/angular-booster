@@ -15,6 +15,13 @@ import { Component } from '@angular/core';
           <li>
             <a [routerLink]="['/favorites']">Favorites</a>
           </li>
+          <li>
+            <a
+              target="_blank"
+              href="https://webinars.atlantic.dev/seo-y-velocidad-con-el-server-side-rendering-de-angular-universal"
+              >👨‍🎓 Webinar</a
+            >
+          </li>
         </ul>
       </nav>
       <h1><a [routerLink]="['/']">Angular application example for lift off 🚀</a></h1>

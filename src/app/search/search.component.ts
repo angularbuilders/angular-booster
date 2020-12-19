@@ -37,8 +37,8 @@ import { QueryParams } from '../query-params';
 })
 export class SearchComponent implements OnInit {
   queryParams: QueryParams = {
-    limit: 100,
-    searchTerm: 'Shuttle',
+    limit: 10,
+    searchTerm: 'Challenger',
   };
   launches: Launch[] = [];
   theProblem = '';

@@ -31,6 +31,9 @@ import { Launch } from 'src/app/launch';
       .tbd {
         color: #3ad29f;
       }
+      .go {
+        color: #3ad29f;
+      }
     `,
   ],
 })
