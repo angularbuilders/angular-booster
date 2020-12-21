@@ -5,7 +5,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
   providedIn: 'root',
 })
 export class UniversalService {
-  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
   isPlatformBrowser() {
     return isPlatformBrowser(this.platformId);
   }
