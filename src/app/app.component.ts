@@ -12,9 +12,6 @@ import { Component } from '@angular/core';
           <li>
             <a [routerLink]="['/search']">Search</a>
           </li>
-          <li>
-            <a [routerLink]="['/search']">Favorites</a>
-          </li>
         </ul>
       </nav>
       <h1><a [routerLink]="['/']">Angular application example for lift off 🚀</a></h1>
